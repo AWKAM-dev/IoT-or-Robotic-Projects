@@ -1,0 +1,106 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.6 Chrome/138.0.7204.100 Electron/37.2.3 Safari/537.36" version="28.0.6">
+  <diagram name="Page-1" id="ZLZefL39xdmx_qpcNCZ1">
+    <mxGraphModel dx="1965" dy="1410" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="yk_PEXu0tg0EmoYGozR6-1" target="yk_PEXu0tg0EmoYGozR6-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-1" value="Program start" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="354" y="20" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="yk_PEXu0tg0EmoYGozR6-2" target="yk_PEXu0tg0EmoYGozR6-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-2" value="Still from ESP32 CAM" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="334" y="130" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="yk_PEXu0tg0EmoYGozR6-4" target="yk_PEXu0tg0EmoYGozR6-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-4" value="Image Analysis and Processing" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="354" y="250" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="yk_PEXu0tg0EmoYGozR6-6" target="yk_PEXu0tg0EmoYGozR6-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-6" value="XY coordinates" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="354" y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="yk_PEXu0tg0EmoYGozR6-8" target="yk_PEXu0tg0EmoYGozR6-14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-8" value="XY to Polar&amp;nbsp;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="354" y="480" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4pf6l-h9KA4B4fjhLktb-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="yk_PEXu0tg0EmoYGozR6-12" target="4pf6l-h9KA4B4fjhLktb-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-12" value="Stepper rotates as per angle" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="322" y="730" width="184" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="yk_PEXu0tg0EmoYGozR6-14" target="yk_PEXu0tg0EmoYGozR6-12" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="yk_PEXu0tg0EmoYGozR6-14" target="yk_PEXu0tg0EmoYGozR6-17" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-14" value="Is R&amp;nbsp; &amp;nbsp;&amp;lt; 17?" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="374" y="600" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="yk_PEXu0tg0EmoYGozR6-17" target="yk_PEXu0tg0EmoYGozR6-2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="574" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-17" value="Push Forward" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="514" y="610" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="yk_PEXu0tg0EmoYGozR6-20" target="yk_PEXu0tg0EmoYGozR6-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-20" value="OpenCV and YOLOv8" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="160" y="250" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-23" value="Yes" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="460" y="610" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="yk_PEXu0tg0EmoYGozR6-24" value="No" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="414" y="688" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4pf6l-h9KA4B4fjhLktb-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4pf6l-h9KA4B4fjhLktb-1" target="4pf6l-h9KA4B4fjhLktb-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4pf6l-h9KA4B4fjhLktb-1" value="Servos rotate to get link towards target" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="291" y="870" width="246" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4pf6l-h9KA4B4fjhLktb-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4pf6l-h9KA4B4fjhLktb-4" target="4pf6l-h9KA4B4fjhLktb-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4pf6l-h9KA4B4fjhLktb-4" value="Gripper engages and arm moves to new location" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="291" y="1030" width="246" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4pf6l-h9KA4B4fjhLktb-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4pf6l-h9KA4B4fjhLktb-6" target="yk_PEXu0tg0EmoYGozR6-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="100" y="1230" />
+              <mxPoint x="100" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4pf6l-h9KA4B4fjhLktb-6" value="waiter_pos called" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="291" y="1190" width="246" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4pf6l-h9KA4B4fjhLktb-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4pf6l-h9KA4B4fjhLktb-8" target="4pf6l-h9KA4B4fjhLktb-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4pf6l-h9KA4B4fjhLktb-8" value="Move stepper and servos back to 0" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="1200" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
