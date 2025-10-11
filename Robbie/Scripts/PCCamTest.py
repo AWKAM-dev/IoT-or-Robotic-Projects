@@ -204,7 +204,7 @@ WORKSPACE_WIDTH_CM = 30.0               # real width in cm corresponding to the 
 WORKSPACE_HEIGHT_CM = 20.0              # real height in cm corresponding to the image height
 
 # Serial port to Arduino
-SERIAL_PORT = "COM5"                    # e.g. "COM5" on Windows or "/dev/ttyUSB0" on Linux
+SERIAL_PORT = "/dev/ttyUSB0"                    # e.g. "COM5" on Windows or "/dev/ttyUSB0" on Linux
 SERIAL_BAUD = 9600
 
 # Behavior
