@@ -192,7 +192,7 @@ ESP32_IP = "10.177.141.153"                # change to your ESP32 IP
 CAPTURE_PATH = "/capture"               # change if your ESP32 uses a different endpoint
 ESP_CAPTURE_URL = f"http://{ESP32_IP}{CAPTURE_PATH}"
 
-MODEL_PATH = "C:\\Users\\awkam\\OneDrive\\Desktop\\Code\\Hard\\Robbie\\YOLO training set\\A4Lit\\Results\\best.pt"# path to your YOLO model; or "yolov8n.pt" for small pretrained
+MODEL_PATH = "/home/aditya/Desktop/IoT-or-Robotic-Projects/Robbie/YOLO/best.pt" #path to your YOLO model or "yolov8n.pt" for small pretrained
 CONF_THRESHOLD = 0.3                    # detection confidence threshold
 
 # Grid configuration:
@@ -209,7 +209,7 @@ SERIAL_BAUD = 9600
 
 # Behavior
 SAVE_DEBUG_IMAGE = True                 # save annotated image locally
-DEBUG_IMAGE_PATH = "C:\\Users\\awkam\\OneDrive\\Desktop\\Code\\Hard\\Robbie\\YOLO training set\\A4Lit\\Trials\\annotated.jpg"
+DEBUG_IMAGE_PATH = "/home/aditya/Pictures/Robbie/annotated.jpg"
 SEND_EACH_DETECTION = False             # if True, send coordinates for each detection as separate lines
 LOOP_INTERVAL = 1.0                     # seconds between cycles if run in loop
 RUN_ONCE = False                        # set True to run a single cycle then exit
