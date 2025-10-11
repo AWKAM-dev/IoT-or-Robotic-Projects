@@ -152,13 +152,18 @@ void loop() {
   Serial.print("Angle is: ");
   Serial.println(polarCoords.second);
 
-//  if(polarCoords.first > 25.5 || polarCoords.first < 8){
-//    Serial.println("RISKY TERRITORY!");
-//    sayNo();
-//    Serial.println("DONE");
-//  }
-
-  Pair servoRot = inverseKinematics(polarCoords.first + step_trans);
+  if(polarCoords.first > 25.5 || polarCoords.first < 8){
+    Serial.println("RISKY TERRITORY!");
+    sayNo();
+    Serial.println("DONE");
+  }
+  
+  Pair servoRot = inverseKinematics(polarCoords.first + step_trans - 3);
+  if(isnan(servoRot.first) || isnan(servoRot.second)){
+    Serial.println("NAN ERROR!");
+    sayNo();
+    Serial.println("DONE");
+  }
   Serial.print("Bottom Servo is at: ");
   Serial.println(servoRot.first);
   Serial.print("Top Servo is at: ");
