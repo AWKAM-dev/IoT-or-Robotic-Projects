@@ -17,9 +17,9 @@ For distances             GC
 
 //Units in cm
 const float LB = 16.0;               // length LB (cm)
-const float LT = 10.0;               // length LT (cm)
-const float SC = 3.0;                // Stepper & servo clearance (cm)
-float GC = 5.8;
+const float LT = 10.5;               // length LT (cm)
+const float SC = 3.5;                // Stepper & servo clearance (cm)
+float GC = 4.5/2;
 const float step_trans = 3;
 
 // const float DEG_TO_RAD = 0.017453292519943295f;
@@ -117,6 +117,8 @@ void loop() {
 
   Serial.println("Enter the X coordinate: ");
   float usrX = floatFromSerial();
+  Serial.print("X coord is: ");
+  Serial.println(usrX);
   usrX -= transX;
   if(usrX > 31 || usrX < 0){
     Serial.println("Coords error! X coord out of bounds!");
@@ -126,6 +128,8 @@ void loop() {
 
   Serial.println("Enter the Y coordinate: ");
   float usrY = floatFromSerial();
+  Serial.print("Y coord is: ");
+  Serial.println(usrY);
   usrY -= transY;
   if(usrY > 22 || usrY < 0){
     Serial.println("Coords error! Y coord out of bounds!");
@@ -148,11 +152,11 @@ void loop() {
   Serial.print("Angle is: ");
   Serial.println(polarCoords.second);
 
-  if(polarCoords.first > 22.5 || polarCoords.first < 7){
-    Serial.println("RISKY TERRITORY!");
-    sayNo();
-    Serial.println("DONE");
-  }
+//  if(polarCoords.first > 25.5 || polarCoords.first < 8){
+//    Serial.println("RISKY TERRITORY!");
+//    sayNo();
+//    Serial.println("DONE");
+//  }
 
   Pair servoRot = inverseKinematics(polarCoords.first + step_trans);
   Serial.print("Bottom Servo is at: ");
@@ -233,6 +237,7 @@ Pair inverseKinematics(float distance){
 
   return output;
 }
+
 
 void smoothMove(int targetAngle, Servo input){
     int currentAngle = input.read();
