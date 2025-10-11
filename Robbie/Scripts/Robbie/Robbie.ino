@@ -107,9 +107,6 @@ void setup() {
   gripper.write(0);
   }
 
-  clockWise(90);
-  delay(500);
-  antiClockWise(90);
 
   Serial.begin(9600);
   Serial.println();
