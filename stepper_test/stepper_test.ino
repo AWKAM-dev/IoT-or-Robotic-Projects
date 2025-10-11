@@ -3,9 +3,9 @@ const int stepsPerRev = 600;                 // stepper steps per revolution
 
 
 const int IN1 = 9;
-const int IN2 = 8;
+const int IN2 = 11;
 const int IN3 = 4;
-const int IN4 = 2;
+const int IN4 = 10;
 
 long stepCount = 0; //Track of Stepper rotation
 const float STEPS_TO_DEG = 90.0/ (float)stepsPerRev;
