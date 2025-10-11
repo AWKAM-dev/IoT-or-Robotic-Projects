@@ -2,8 +2,7 @@
 #include <math.h>
 
 const bool runTest = false;
-const bool runAgree = false;
-
+const bool runAgree = false;;
 /*
 recieve XY coordinates with unit length as CONV_FACT (defined later).
 Convert XY to cm.
@@ -19,7 +18,7 @@ For distances             GC
 const float LB = 16.0;               // length LB (cm)
 const float LT = 10.5;               // length LT (cm)
 const float SC = 3.5;                // Stepper & servo clearance (cm)
-float GC = 4.5/2;
+float GC = 4;
 const float step_trans = 3;
 
 // const float DEG_TO_RAD = 0.017453292519943295f;
@@ -156,13 +155,15 @@ void loop() {
     Serial.println("RISKY TERRITORY!");
     sayNo();
     Serial.println("DONE");
+    return;
   }
   
-  Pair servoRot = inverseKinematics(polarCoords.first + step_trans - 3);
+  Pair servoRot = inverseKinematics(polarCoords.first + step_trans - (polarCoords.first * 0));
   if(isnan(servoRot.first) || isnan(servoRot.second)){
     Serial.println("NAN ERROR!");
     sayNo();
     Serial.println("DONE");
+    return;
   }
   Serial.print("Bottom Servo is at: ");
   Serial.println(servoRot.first);
