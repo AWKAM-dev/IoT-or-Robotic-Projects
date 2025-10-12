@@ -158,7 +158,7 @@ void loop() {
     return;
   }
   
-  Pair servoRot = inverseKinematics(polarCoords.first + step_trans - (polarCoords.first * 0));
+  Pair servoRot = inverseK(polarCoords.first + step_trans - (polarCoords.first * 0));
   if(isnan(servoRot.first) || isnan(servoRot.second)){
     Serial.println("NAN ERROR!");
     sayNo();
@@ -242,6 +242,34 @@ Pair inverseKinematics(float distance){
   output.second = BCDNot;
 
   return output;
+}
+
+Pair inverseK(float distance){
+  Pair output;
+
+  //Triangle ABE
+  float BE = sqrt(SC*SC + distance*distance);
+  float BEA = atan(distance/BE);
+  float ABE = 90 - BEA;
+
+  //Triangle BDE
+  float BED = ABE;
+  float BD = sqrt(BE*BE + GC*GC - 2*GC*BE*cos(BED));
+  float EBD = acos((GC*GC - BD*BD - BE*BE)/(-2*BD*BE));
+
+  //Triangle FBD
+  float FBD = 90 - ((ABE+EBD)*RAD_TO_DEGS);
+
+  //Triangle BCD
+  float BCD = acos((BD*BD - LB*LB - LT*LT)/(-2*LB*LT));
+  float CBD = acos((LT*LT - LB*LB - BD*BD)/(-2*LB*BD));
+
+  //first is botServo.
+  output.first = 90 - ((CBD+FBD)*RAD_TO_DEGS);
+  output.second = 180 - BCD;
+  
+  return output;
+  
 }
 
 
