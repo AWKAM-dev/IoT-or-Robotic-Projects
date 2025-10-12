@@ -158,7 +158,7 @@ void loop() {
     return;
   }
   
-  Pair servoRot = inverseK(polarCoords.first + step_trans - (polarCoords.first * 0));
+  Pair servoRot = inverseK(polarCoords.first + step_trans - (polarCoords.first * 0.1));
   if(isnan(servoRot.first) || isnan(servoRot.second)){
     Serial.println("NAN ERROR!");
     sayNo();
