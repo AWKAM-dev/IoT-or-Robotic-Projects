@@ -157,8 +157,10 @@ void loop() {
     Serial.println("DONE");
     return;
   }
+
+  if(polarCoords.second > 60)polarCoords.first -= 3;
   
-  Pair servoRot = inverseKinematics(polarCoords.first + step_trans - (polarCoords.first * 0.1));
+  Pair servoRot = inverseKinematics(polarCoords.first + step_trans);
   if(isnan(servoRot.first) || isnan(servoRot.second)){
     Serial.println("NAN ERROR!");
     sayNo();
@@ -283,7 +285,7 @@ void smoothMove(int targetAngle, Servo input){
     currentAngle += step;
     input.write(currentAngle);
     //Adjust delay to adjust servo speed
-    delay(100);
+    delay(50);
     }
 }
 
@@ -391,7 +393,7 @@ void sayNo(){
   top.write(30);
   antiClockWise(45);
   gripper.write(120);
-  for(int i = 0; i < 4; i++){
+  for(int i = 0; i < 2; i++){
     clockWise(15);
     delay(500);
     antiClockWise(15);
