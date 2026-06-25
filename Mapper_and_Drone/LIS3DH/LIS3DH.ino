@@ -1,6 +1,12 @@
-void setup() {
-  // put your setup code here, to run once:
+#include <Wire.h>
+#include <Adafruit_LIS3DH.h>
+#include <Adafruit_Sensor.h>
 
+Adafruit_LIS3DH lis = Adafruit_LIS3DH();
+
+void setup() {
+  Serial.begin(115200);
+  while(!Serial) delay(10); //Wait for Serial monitor to load up
 }
 
 void loop() {
