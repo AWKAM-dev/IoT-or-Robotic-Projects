@@ -30,6 +30,28 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  /* 1. Read raw sensor data (registers) */
+  lis.read();
 
+  /* 2. Read standardized physics data (m/s^2) using Adafruit unified sensor framework */
+  sensors_event_t event;
+  lis.getEvent(&event);
+
+  /* 3. Display the results */
+  Serial.print("X: ");
+  Serial.print(event.acceleration.x);
+  Serial.print(" m/s^2");
+
+  Serial.print("Y: ");
+  Serial.print(event.acceleration.y);
+  Serial.print(" m/s^2");
+
+  Serial.print("Z: ");
+  Serial.print(event.acceleration.z);
+  Serial.print(" m/s^2");
+
+  /* Optional: Print raw ADC readings if you have anything wired to ADC1/2/3 */
+  // Serial.print("ADC1: "); Serial.println(lis.readADC(1));
+
+  delay(200);
 }
