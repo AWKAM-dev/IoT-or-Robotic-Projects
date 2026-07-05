@@ -3,7 +3,7 @@
 
 #define time_int 5
 
-void riemannSums(float* input[]){
+float riemannSums(float* input[]){
     float sum = 0;
     for(int i = 0; i < sizeof(input); i++){
         if(input[i] == NULL){
@@ -13,6 +13,7 @@ void riemannSums(float* input[]){
         sum += delta_x * time_int;
     }
     printf("Riemann Sum: %f\n", sum);
+    return sum;
 }
 
 int main(){
