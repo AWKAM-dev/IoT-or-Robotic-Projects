@@ -31,8 +31,6 @@ float trapezoidalRule(float* input[]){
     return sum;
 }
 
-
-
 int main(){
 
 }
