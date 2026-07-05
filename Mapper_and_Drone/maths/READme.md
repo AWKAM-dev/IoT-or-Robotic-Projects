@@ -24,4 +24,12 @@
 │
 └── 📄 platformio.ini            # Project configuration
 
+# lib/imu_driver/CMakeLists.txt
+
+idf_component_register(
+    SRCS "src/imu_driver.c"
+    INCLUDE_DIRS "include"
+    REQUIRES driver            # Tells ESP-IDF to link native I2C/GPIO drivers
+)
+
 Quaternions.c evaluates input Euler angles and outputs Quaternions.
