@@ -24,5 +24,4 @@
 │
 └── 📄 platformio.ini            # Project configuration
 
-
 Quaternions.c evaluates input Euler angles and outputs Quaternions.

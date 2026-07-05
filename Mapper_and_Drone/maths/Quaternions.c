@@ -16,12 +16,12 @@ struct Quaternion {
     float z; // z component of the vector part
 }Quaternion;
 
-void euler_to_quaternion(struct EulerAngles euler, struct Quaternion *quat) {
+struct Quaternion euler_to_quaternion(struct EulerAngles euler, struct Quaternion *quat) {
     // Convert degrees to radians
     float roll  = euler.roll  * (M_PI_F / 180.0f);
     float pitch = euler.pitch * (M_PI_F / 180.0f);
     float yaw   = euler.yaw   * (M_PI_F / 180.0f);
-
+    
     float cy = cosf(yaw * 0.5f);
     float sy = sinf(yaw * 0.5f);
     float cp = cosf(pitch * 0.5f);
