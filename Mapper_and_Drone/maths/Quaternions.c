@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <math.h>
 
+#define M_PI_F 3.14159265358979323846f
+
 struct EulerAngles {
     float roll;  // Rotation around the x-axis. In degrees
     float pitch; // Rotation around the y-axis. In degrees
@@ -14,19 +16,18 @@ struct Quaternion {
     float z; // z component of the vector part
 }Quaternion;
 
-void EulerToQuaternion(struct EulerAngles euler, struct Quaternion *quat) {
-    //Convert degrees to radians
-    float roll = euler.roll * (3.14159265358979323846f / 180.0f);
-    float pitch = euler.pitch * (3.14159265358979323846f / 180.0f);
-    float yaw = euler.yaw * (3.14159265358979323846f / 180.0f);
+void euler_to_quaternion(struct EulerAngles euler, struct Quaternion *quat) {
+    // Convert degrees to radians
+    float roll  = euler.roll  * (M_PI_F / 180.0f);
+    float pitch = euler.pitch * (M_PI_F / 180.0f);
+    float yaw   = euler.yaw   * (M_PI_F / 180.0f);
 
-    // Calculate the quaternion components
-    float cy = cos(yaw * 0.5f);
-    float sy = sin(yaw * 0.5f);
-    float cp = cos(pitch * 0.5f);
-    float sp = sin(pitch * 0.5f);
-    float cr = cos(roll * 0.5f);
-    float sr = sin(roll * 0.5f);
+    float cy = cosf(yaw * 0.5f);
+    float sy = sinf(yaw * 0.5f);
+    float cp = cosf(pitch * 0.5f);
+    float sp = sinf(pitch * 0.5f);
+    float cr = cosf(roll * 0.5f);
+    float sr = sinf(roll * 0.5f);
 
     quat->w = cr * cp * cy + sr * sp * sy;
     quat->x = sr * cp * cy - cr * sp * sy;
