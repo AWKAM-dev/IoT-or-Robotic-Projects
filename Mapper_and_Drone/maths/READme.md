@@ -1,3 +1,28 @@
-Each helper library to the components folder, or another folder within the component folder in the project folder.
-.c file with CMakeLists.txt, and the .h file in include/
+📁 MyDroneFlightController/
+│
+├── 📁 include/                  # Global include files for main app
+│   └── main.h
+│
+├── 📁 src/                      # Your main application loop
+│   ├── main.c
+│   └── CMakeLists.txt
+│
+├── 📁 lib/                      # 👈 YOUR SANDBOX LIBRARIES LIVE HERE
+│   ├── 📁 imu_driver/
+│   │   ├── 📁 include/
+│   │   │   └── imu_driver.h
+│   │   ├── 📁 src/
+│   │   │   └── imu_driver.c
+│   │   └── CMakeLists.txt       # 👈 Component registration
+│   │
+│   └── 📁 sensor_fusion/
+│       ├── 📁 include/
+│       │   └── sensor_fusion.h
+│       ├── 📁 src/
+│       │   └── sensor_fusion.c
+│       └── CMakeLists.txt
+│
+└── 📄 platformio.ini            # Project configuration
+
+
 Quaternions.c evaluates input Euler angles and outputs Quaternions.
