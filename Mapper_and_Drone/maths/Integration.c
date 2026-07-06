@@ -26,7 +26,7 @@ float trapezoidalRule(float* input[]){
     for(int i = 0; i < sizeof(input); i++){
         sum += *input[i];
     }
-    sum = (h / 2) * (firstPoint + lastPoint + (2 * sum));
+    sum = (h / 2) * (firstPoint + lastPoint + (2 * sum);
     printf("Trapezoidal Rule: %f\n", sum);
     return sum;
 }
