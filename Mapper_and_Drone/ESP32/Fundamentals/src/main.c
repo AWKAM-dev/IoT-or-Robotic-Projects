@@ -2,7 +2,11 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <esp_log.h>
+#include <driver/gpio.h>
 
+#define LED_PIN 2
+
+//Apparently ESPIDF doesn't prefer printfs.
 static const char *TAG = "RTOS_DEMO";
 
 //Define the task function
@@ -12,7 +16,24 @@ void my_first_task(void *pvParameters) {
         ESP_LOGI(TAG ,"Hello from my first task!\n");
 
         //vTaskDelay expects ticks. pdMS_TO_TICKS converts milliseconds to ticks. 1000ms = 1s
-        vTaskDelay(pdMS_TO_TICKS(500));
+        vTaskDelay(pdMS_TO_TICKS(200));
+    }
+}
+
+void led_blink_task(void *pvParameters){
+    gpio_reset_pin(LED_PIN);
+    gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
+
+    int ON = 1;
+    ESP_LOGI(TAG, "GPIO Initialization for GPIO2 is finished\n");
+
+    while(1){
+        ON = !ON;
+        gpio_set_level(LED_PIN, ON);
+
+        ESP_LOGI(TAG, "GPIO 2 at %s", ON ? "ON" : "OFF");
+
+        vTaskDelay(pdMS_TO_TICKS(400));
     }
 }
 
@@ -24,6 +45,15 @@ void app_main(void) {
     xTaskCreate(
         my_first_task, //Function that implements the task
         "MyFirstTask", //Text name for task (debugging guide)
+        2048, //Stack size
+        NULL, //task parameter
+        3, //priority
+        NULL //task handle
+    );
+
+    xTaskCreate(
+        led_blink_task, //Function that implements the task
+        "LED", //Text name for task (debugging guide)
         2048, //Stack size
         NULL, //task parameter
         5, //priority
