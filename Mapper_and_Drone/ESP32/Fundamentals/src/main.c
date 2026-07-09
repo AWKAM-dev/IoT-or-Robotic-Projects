@@ -1,29 +1,38 @@
 #include <stdio.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
-#include <driver/gpio.h>
+#include <esp_log.h>
 
-#define LED_PIN 5
+static const char *TAG = "RTOS_DEMO";
 
-// Dedicated FreeRTOS task for blinking the LED
-void led_blink_task(void *pvParameters) {
-    // Configure the GPIO pin inside the task
-    gpio_reset_pin(LED_PIN);
-    gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
-    int ON = 0;
+//Define the task function
+void my_first_task(void *pvParameters) {
+    //Either run in infinite loop or delete itself. Never return
+    while(1) {
+        ESP_LOGI(TAG ,"Hello from my first task!\n");
 
-    while (1) {
-        ON = !ON;
-        gpio_set_level(LED_PIN, ON);
-        
-        // Block the task for 1000ms, letting the CPU run other tasks/WDT
-        vTaskDelay(pdMS_TO_TICKS(1000)); 
+        //vTaskDelay expects ticks. pdMS_TO_TICKS converts milliseconds to ticks. 1000ms = 1s
+        vTaskDelay(pdMS_TO_TICKS(500));
     }
 }
 
 void app_main(void) {
-    // Create the task: Name, Stack size (2048 bytes), Params, Priority, Handle
-    xTaskCreate(led_blink_task, "led_blink_task", 2048, NULL, 5, NULL);
+    ESP_LOGI(TAG, "Starting the main application\n");
 
-    // app_main exits cleanly here; FreeRTOS handles the background execution
+    //Task creation
+    //Using standard method. ESPIDF will automatically allocate a core
+    xTaskCreate(
+        my_first_task, //Function that implements the task
+        "MyFirstTask", //Text name for task (debugging guide)
+        2048, //Stack size
+        NULL, //task parameter
+        5, //priority
+        NULL //task handle
+    );
+
+    while(1){
+        //Main app is a task in of itself. So it should not return either
+        ESP_LOGI(TAG, "Hello from main task!\n");
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
 }
