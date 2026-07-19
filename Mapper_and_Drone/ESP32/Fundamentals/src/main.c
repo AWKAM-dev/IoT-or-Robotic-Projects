@@ -33,7 +33,24 @@ void led_blink_task(void *pvParameters){
 
         ESP_LOGI(TAG, "GPIO 2 at %s", ON ? "ON" : "OFF");
 
-        vTaskDelay(pdMS_TO_TICKS(400));
+        vTaskDelay(pdMS_TO_TICKS(500));
+    }
+}
+
+void higher_led(void *pvParameters) {
+    gpio_reset_pin(LED_PIN);
+    gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
+
+    int ON = 1;
+    int count = 0;
+    ESP_LOGI(TAG, "Higher LED task is initiialized\n");
+
+    while(1){
+        ON = !ON;
+        count = !count;
+        if (count){ gpio_set_level(LED_PIN, ON);}
+        ESP_LOGI(TAG, "Higher LED is: %s", ON ? "ON" : "OFF");
+        vTaskDelay(pdMS_TO_TICKS(300));
     }
 }
 
@@ -56,8 +73,17 @@ void app_main(void) {
         "LED", //Text name for task (debugging guide)
         2048, //Stack size
         NULL, //task parameter
-        5, //priority
+        4, //priority
         NULL //task handle
+    );
+
+    xTaskCreate(
+        higher_led,
+        "HighLED",
+        2048,
+        NULL,
+        5,
+        NULL
     );
 
     while(1){
