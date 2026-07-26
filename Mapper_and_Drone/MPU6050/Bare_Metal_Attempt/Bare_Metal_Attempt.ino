@@ -47,7 +47,7 @@ void setup() {
   i2c_write(0x00); //Set to 0 to wake it up
   i2c_stop();
 
-  Serial.println("Baremetal TWI initialization complete!");
+//  Serial.println("Baremetal TWI initialization complete!");
 }
 
 void loop() {
@@ -93,19 +93,12 @@ void loop() {
   //if( ((ax >= TOL_VAL) || (ay >= TOL_VAL) | (az >= TOL_VAL) || (gx >= TOL_VAL) || (gy >= TOL_VAL) || (gz >= TOL_VAL + 9.8) || (ax <= -TOL_VAL) || (ay <= -TOL_VAL) || (az <= -TOL_VAL) || (gx <= -TOL_VAL) || (gy <= -TOL_VAL) || (gz <= -TOL_VAL))){
 
   //Print raw values to test communication stability
-//  Serial.println("AX: "); 
-  Serial.println(ax);
-//  Serial.println("AY: "); 
-  Serial.println(ay);
-//  Serial.println("AZ: "); 
-  Serial.println(az);
-//  Serial.println("GX: "); 
-  Serial.println(gx);
-//  Serial.println("GY: "); 
-  Serial.println(gy);
-//  Serial.println("GZ: "); 
+  Serial.print(ax); Serial.print(",");
+  Serial.print(ay); Serial.print(",");
+  Serial.print(az); Serial.print(",");
+  Serial.print(gx); Serial.print(",");
+  Serial.print(gy); Serial.print(",");
   Serial.println(gz);
-
   //}
 
   delay(500); //Fast cycle loop close to the 5ms drone loop

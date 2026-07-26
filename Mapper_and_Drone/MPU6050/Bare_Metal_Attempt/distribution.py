@@ -18,7 +18,7 @@ def parse_imu(serOut):
         return None
 
     try:
-        values = [float(val.strip()) for val in serOut.split("\n")]
+        values = [float(val.strip()) for val in serOut.split(",")]
 
         if len(values) == 6:
             return values
@@ -30,6 +30,7 @@ def parse_imu(serOut):
         print(f"Warning: Could not parse data string: {serOut}")
         return None
 #End of parse_imu
+
 
 
 try:
@@ -45,8 +46,8 @@ try:
             if raw_data:
                 #Decode bytes to string and strip whitespaces
                 text_data = raw_data.decode('utf-8').strip()
-                getArray(text_data)
-                print(f"Recieved {text_data}")
+                value_list = parse_imu(text_data)
+                print(f"Recieved {value_list}")
 
 except serial.SerialException as e:
     print(f"Error opening serial port as {e}")
