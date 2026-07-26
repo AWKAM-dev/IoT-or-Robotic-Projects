@@ -1,5 +1,6 @@
 #define MPU6050_ADDR 0x68
 #define TOL_VAL 1
+#define gOffset 10.10
 
 //RAW hardware helper functions for TWI (I2C) handling
 void i2c_init() {
@@ -92,12 +93,18 @@ void loop() {
   //if( ((ax >= TOL_VAL) || (ay >= TOL_VAL) | (az >= TOL_VAL) || (gx >= TOL_VAL) || (gy >= TOL_VAL) || (gz >= TOL_VAL + 9.8) || (ax <= -TOL_VAL) || (ay <= -TOL_VAL) || (az <= -TOL_VAL) || (gx <= -TOL_VAL) || (gy <= -TOL_VAL) || (gz <= -TOL_VAL))){
 
   //Print raw values to test communication stability
-  Serial.println("AX: "); Serial.println(ax-2.02);
-  Serial.println("AY: "); Serial.println(ay);
-  Serial.println("AZ: "); Serial.println(az-10.10);
-  Serial.println("GX: "); Serial.println(gx);
-  Serial.println("GY: "); Serial.println(gy);
-  Serial.println("GZ: "); Serial.println(gz);
+//  Serial.println("AX: "); 
+  Serial.println(ax);
+//  Serial.println("AY: "); 
+  Serial.println(ay);
+//  Serial.println("AZ: "); 
+  Serial.println(az);
+//  Serial.println("GX: "); 
+  Serial.println(gx);
+//  Serial.println("GY: "); 
+  Serial.println(gy);
+//  Serial.println("GZ: "); 
+  Serial.println(gz);
 
   //}
 
