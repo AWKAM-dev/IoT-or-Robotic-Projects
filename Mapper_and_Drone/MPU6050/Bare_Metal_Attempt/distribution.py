@@ -3,7 +3,7 @@ import time
 
 #Configuring Serial port
 PORT = "/dev/ttyACM0"
-BAUDRATE = 9600
+BAUDRATE = 115200
 
 try:
     with serial.Serial(PORT, BAUDRATE, timeout=1) as ser:
@@ -17,7 +17,7 @@ try:
             #Only process if data was actually recieved
             if raw_data:
                 #Decode bytes to string and strip whitespaces
-                text_data = raw_data.replace("'", "").strip()
+                text_data = raw_data.decode('utf-8').strip()
                 print(f"Recieved {text_data}")
 
 except serial.SerialException as e:
