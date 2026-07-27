@@ -1,5 +1,8 @@
 import serial
 import time
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 """
 ax, ay, az, gx, gy, gz
@@ -31,14 +34,16 @@ def parse_imu(serOut):
         return None
 #End of parse_imu
 
-
+data_list = []
+SAMPLE_COUNT = 1000
+print(f"Collecting information from {PORT} @ {BAUDRATE}. Maintain stable position of sensor")
 
 try:
     with serial.Serial(PORT, BAUDRATE, timeout=1) as ser:
         print(f"Connected to {PORT}. Waiting for data...")
         time.sleep(2)
 
-        while True:
+        while len(data_list) < SAMPLE_COUNT:
             #Read a line until a newline character is hit
             raw_data = ser.readline()
 
@@ -47,10 +52,14 @@ try:
                 #Decode bytes to string and strip whitespaces
                 text_data = raw_data.decode('utf-8').strip()
                 value_list = parse_imu(text_data)
-                print(f"Recieved {value_list}")
+                if value_list:
+                    data_list.append(value_list)
+                    if len(data_list) % 100 == 0:
+                        print(f"Progress: {100*(len(data_list)/SAMPLE_COUNT)}")
 
 except serial.SerialException as e:
     print(f"Error opening serial port as {e}")
 
 except KeyboardInterrupt:
     print("\nProgramm stopped by user.")
+
