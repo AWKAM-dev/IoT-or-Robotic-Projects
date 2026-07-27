@@ -95,3 +95,15 @@ plt.savefig("mpu6050_distribution.png", dpi=300, bbox_inches='tight')
 print("Plot saved successfully")
 
 plt.show()
+
+"""
+27 July 2026
+--- Sensor Noise Statistics ---
+         mean       std    min    max
+ax   0.552248  0.032744   0.43   0.72
+ay   0.070174  0.032617  -0.05   0.19
+az  10.220433  0.049666  10.03  10.40
+gx  -0.016268  0.004837  -0.02  -0.01
+gy  -0.006242  0.004844  -0.01  -0.00
+gz  -0.003945  0.004904  -0.02   0.01
+"""
