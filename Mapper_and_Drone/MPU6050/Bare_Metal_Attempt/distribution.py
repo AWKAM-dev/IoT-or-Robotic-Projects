@@ -81,5 +81,11 @@ for i, col in enumerate(['ax', 'ay', 'az']):
     axes[0,i].set_xlabel("Value")
     axes[0,i].set_ylabel("Count")
 
+for i, col in enumerate(['gx', 'gy', 'gz']):
+    sns.histplot(df[col], kde=True, ax=axes[1, i], color='tab:orange', bins=30)
+    axes[1, i].set_title(f"Gyro {col.upper()} (rad/s)")
+    axes[1, i].set_xlabel("Value")
+    axes[1, i].set_ylabel("Count")
+
 plt.tight_layout()
 plt.show()
