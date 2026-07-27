@@ -75,3 +75,11 @@ print(df.describe().T[['mean', 'std', 'min', 'max']])
 fig, axes = plt.subplots(2, 3, figsize=(14,8))
 fig.suptitle("MPU6050 Noise Distribution (Static Sensor)", fontsize=16)
 
+for i, col in enumerate(['ax', 'ay', 'az']):
+    sns.histplot(df[col], kde=True, ax=axes[0, i], color='tab:blue', bins=30)
+    axes[0,i].set_title(f"Accel {col.upper()} (m/s2)")
+    axes[0,i].set_xlabel("Value")
+    axes[0,i].set_ylabel("Count")
+
+plt.tight_layout()
+plt.show()
