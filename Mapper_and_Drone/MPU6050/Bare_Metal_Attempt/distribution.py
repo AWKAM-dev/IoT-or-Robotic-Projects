@@ -1,12 +1,13 @@
 import serial
 import time
-import json
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 """
 ax, ay, az, gx, gy, gz
+
+Most of the code here is AI generated as I am yet to familiriaze myself with Python and all its vast libraries
 """
 
 #Configuring Serial port
