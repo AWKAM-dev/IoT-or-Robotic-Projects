@@ -1,5 +1,6 @@
 import serial
 import time
+import json
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -35,7 +36,7 @@ def parse_imu(serOut):
 #End of parse_imu
 
 data_list = []
-SAMPLE_COUNT = 1000
+SAMPLE_COUNT = 10000
 print(f"Collecting information from {PORT} @ {BAUDRATE}. Maintain stable position of sensor")
 
 try:
@@ -88,4 +89,8 @@ for i, col in enumerate(['gx', 'gy', 'gz']):
     axes[1, i].set_ylabel("Count")
 
 plt.tight_layout()
+
+plt.savefig("mpu6050_distribution.png", dpi=300, bbox_inches='tight')
+print("Plot saved successfully")
+
 plt.show()
