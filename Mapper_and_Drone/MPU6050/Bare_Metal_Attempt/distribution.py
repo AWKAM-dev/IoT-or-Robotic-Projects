@@ -63,3 +63,15 @@ except serial.SerialException as e:
 except KeyboardInterrupt:
     print("\nProgramm stopped by user.")
 
+#Convert to pandas datafram
+columns = ['ax', 'ay', 'az', 'gx', 'gy', 'gz']
+df = pd.DataFrame(data_list, columns=columns)
+
+#Display Summary Statistics
+print("\n--- Sensor Noise Statistics ---")
+print(df.describe().T[['mean', 'std', 'min', 'max']])
+
+#Plot distributions using seaborn and matplotlib
+fig, axes = plt.subplots(2, 3, figsize=(14,8))
+fig.suptitle("MPU6050 Noise Distribution (Static Sensor)", fontsize=16)
+
