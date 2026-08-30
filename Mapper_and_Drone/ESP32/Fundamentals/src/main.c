@@ -4,7 +4,11 @@
 #include <esp_log.h>
 #include <driver/gpio.h>
 
-#define LED_PIN 2
+#define LED_PIN 13
+//14, 15 is always HIGH unless coded otherwise
+//19 is dead
+//34 is dead
+//35 is dead
 
 //Apparently ESPIDF doesn't prefer printfs.
 static const char *TAG = "RTOS_DEMO";
@@ -33,7 +37,7 @@ void led_blink_task(void *pvParameters){
 
         ESP_LOGI(TAG, "GPIO 2 at %s", ON ? "ON" : "OFF");
 
-        vTaskDelay(pdMS_TO_TICKS(500));
+        vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
 
@@ -59,14 +63,14 @@ void app_main(void) {
 
     //Task creation
     //Using standard method. ESPIDF will automatically allocate a core
-    xTaskCreate(
-        my_first_task, //Function that implements the task
-        "MyFirstTask", //Text name for task (debugging guide)
-        2048, //Stack size
-        NULL, //task parameter
-        3, //priority
-        NULL //task handle
-    );
+    // xTaskCreate(
+    //     my_first_task, //Function that implements the task
+    //     "MyFirstTask", //Text name for task (debugging guide)
+    //     2048, //Stack size
+    //     NULL, //task parameter
+    //     3, //priority
+    //     NULL //task handle
+    // );
 
     xTaskCreate(
         led_blink_task, //Function that implements the task
@@ -77,18 +81,19 @@ void app_main(void) {
         NULL //task handle
     );
 
-    xTaskCreate(
-        higher_led,
-        "HighLED",
-        2048,
-        NULL,
-        5,
-        NULL
-    );
+    // xTaskCreate(
+    //     higher_led,
+    //     "HighLED",
+    //     2048,
+    //     NULL,
+    //     5,
+    //     NULL
+    // );
 
-    while(1){
-        //Main app is a task in of itself. So it should not return either
-        ESP_LOGI(TAG, "Hello from main task!\n");
-        vTaskDelay(pdMS_TO_TICKS(1000));
-    }
+    // while(1){
+    //     //Main app is a task in of itself. So it should not return either
+    //     ESP_LOGI(TAG, "Hello from main task!\n");
+    //     vTaskDelay(pdMS_TO_TICKS(1000));
+    // }
 }
+
