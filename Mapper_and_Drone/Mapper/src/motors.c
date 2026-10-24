@@ -30,3 +30,35 @@ void resetIC(char ICID){
         HAL_GPIO_WritePin(GPIOC, L293D_B_IN1_Pin | L293D_B_EN2_Pin,RESET);
     }
 }
+
+void moveForward(char ICID){
+    if(ICID == "A"){
+
+    }
+
+    if(ICID == "B"){
+        
+    }
+}
+
+void moveBackward(char ICID){
+    if(ICID == "A"){
+
+    }
+
+    if(ICID == "B"){
+        
+    }
+}
+
+void brake(char ICID){
+    //A
+    HAL_GPIO_WritePin(GPIOA, L293D_A_IN1_Pin | L293D_A_EN1_Pin | L293D_A_EN2_Pin, SET);
+    HAL_GPIO_WritePin(GPIOB, L293D_A_IN3_Pin | L293D_A_IN4_Pin,SET);
+    HAL_GPIO_WritePin(GPIOC, L293D_A_IN2_Pin, SET);
+
+    //B
+    HAL_GPIO_WritePin(GPIOA, L293D_B_IN2_Pin | L293D_B_EN1_Pin, SET);
+    HAL_GPIO_WritePin(GPIOB, L293D_B_IN3_Pin| L293D_B_IN4_Pin,SET);
+    HAL_GPIO_WritePin(GPIOC, L293D_B_IN1_Pin | L293D_B_EN2_Pin,SET);
+}
