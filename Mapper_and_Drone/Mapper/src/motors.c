@@ -32,23 +32,43 @@ void resetIC(char ICID){
 }
 
 void moveForward(char ICID){
-    if(ICID == "A"){
+    //A
+    HAL_GPIO_WritePin(GPIOA, L293D_A_EN1_Pin, SET);
+    HAL_GPIO_WritePin(GPIOA, L293D_A_IN1_Pin, SET);
+    HAL_GPIO_WritePin(GPIOC, L293D_A_IN2_Pin, RESET);
 
-    }
+    HAL_GPIO_WritePin(GPIOA, L293D_A_EN2_Pin, SET);
+    HAL_GPIO_WritePin(GPIOB, L293D_A_IN3_Pin, SET);
+    HAL_GPIO_WritePin(GPIOB, L293D_A_IN4_Pin, RESET);
 
-    if(ICID == "B"){
-        
-    }
+    //B
+    HAL_GPIO_WritePin(GPIOA, L293D_B_EN1_Pin, SET);
+    HAL_GPIO_WritePin(GPIOC, L293D_B_IN1_Pin, SET);
+    HAL_GPIO_WritePin(GPIOA, L293D_B_IN2_Pin, RESET);
+
+    HAL_GPIO_WritePin(GPIOC, L293D_B_EN2_Pin, SET);
+    HAL_GPIO_WritePin(GPIOB, L293D_B_IN3_Pin, SET);
+    HAL_GPIO_WritePin(GPIOB, L293D_B_IN4_Pin, RESET);
 }
 
 void moveBackward(char ICID){
-    if(ICID == "A"){
+    //A
+    HAL_GPIO_WritePin(GPIOA, L293D_A_EN1_Pin, SET);
+    HAL_GPIO_WritePin(GPIOA, L293D_A_IN1_Pin, RESET);
+    HAL_GPIO_WritePin(GPIOC, L293D_A_IN2_Pin, SET);
 
-    }
+    HAL_GPIO_WritePin(GPIOA, L293D_A_EN2_Pin, SET);
+    HAL_GPIO_WritePin(GPIOB, L293D_A_IN3_Pin, RESET);
+    HAL_GPIO_WritePin(GPIOB, L293D_A_IN4_Pin, SET);
 
-    if(ICID == "B"){
-        
-    }
+    //B
+    HAL_GPIO_WritePin(GPIOA, L293D_B_EN1_Pin, SET);
+    HAL_GPIO_WritePin(GPIOC, L293D_B_IN1_Pin, RESET);
+    HAL_GPIO_WritePin(GPIOA, L293D_B_IN2_Pin, SET);
+
+    HAL_GPIO_WritePin(GPIOC, L293D_B_EN2_Pin, SET);
+    HAL_GPIO_WritePin(GPIOB, L293D_B_IN3_Pin, RESET);
+    HAL_GPIO_WritePin(GPIOB, L293D_B_IN4_Pin, SET);
 }
 
 void brake(char ICID){
