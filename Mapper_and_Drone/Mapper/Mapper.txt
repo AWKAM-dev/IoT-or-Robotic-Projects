@@ -1,0 +1,72 @@
+Configuration	Mapper
+STM32CubeMX 	6.18.1
+Date	10/24/2026
+MCU	STM32F411CEUx
+
+
+
+PERIPHERALS	MODES	FUNCTIONS	PINS
+SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+2	PC13-ANTI_TAMP	GPIO_Output	
+3	PC14-OSC32_IN	GPIO_Output	
+4	PC15-OSC32_OUT	GPIO_Output	
+10	PA0-WKUP*	TIM2_CH1	
+12	PA2	GPIO_Output	
+13	PA3	GPIO_Output	
+14	PA4	GPIO_Output	
+15	PA5	GPIO_Output	
+26	PB13	GPIO_Output	
+27	PB14	GPIO_Output	
+32	PA11	GPIO_Output	
+40	PB4	GPIO_Output	
+41	PB5	GPIO_Output	
+PERIPHERALS	MODES	FUNCTIONS	PINS
+SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+2	PC13-ANTI_TAMP	GPIO_Output	
+3	PC14-OSC32_IN	GPIO_Output	
+4	PC15-OSC32_OUT	GPIO_Output	
+10	PA0-WKUP*	TIM2_CH1	
+12	PA2	GPIO_Output	
+13	PA3	GPIO_Output	
+14	PA4	GPIO_Output	
+15	PA5	GPIO_Output	
+26	PB13	GPIO_Output	
+27	PB14	GPIO_Output	
+32	PA11	GPIO_Output	
+40	PB4	GPIO_Output	
+41	PB5	GPIO_Output	
+
+
+
+SOFTWARE PROJECT
+
+Project Settings : 
+Project Name : Mapper
+Project Folder : /home/aditya/Desktop/IoT-or-Robotic-Projects/Mapper_and_Drone/Mapper
+Toolchain / IDE : EWARM V8.50
+Firmware Package Name and Version : STM32Cube FW_F4 V1.28.3
+
+
+Code Generation Settings : 
+STM32Cube MCU packages and embedded software packs : Copy all used libraries into the project folder
+Generate peripheral initialization as a pair of '.c/.h' files per peripheral : No
+Backup previously generated files when re-generating : No
+Delete previously generated files when not re-generated : Yes
+Set all free pins as analog (to optimize the power consumption) : Yes
+
+
+Toolchains Settings : 
+Compiler Optimizations : 
+
+
+
+
+

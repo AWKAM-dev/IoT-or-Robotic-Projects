@@ -4,7 +4,8 @@
 #include <esp_log.h>
 #include <driver/gpio.h>
 
-#define LED_PIN 13
+#define LED_PIN 2
+#define GPIO_PIN 18
 //14, 15 is always HIGH unless coded otherwise
 //19 is dead
 //34 is dead
@@ -36,6 +37,23 @@ void led_blink_task(void *pvParameters){
         gpio_set_level(LED_PIN, ON);
 
         ESP_LOGI(TAG, "GPIO 2 at %s", ON ? "ON" : "OFF");
+
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+}
+
+void GPIO_task(void *pvParameters){
+    gpio_reset_pin(GPIO_PIN);
+    gpio_set_direction(GPIO_PIN, GPIO_MODE_OUTPUT);
+
+    int ON = 1;
+    ESP_LOGI(TAG, "GPIO Initialization for GPIO2 is finished\n");
+
+    while(1){
+        ON = !ON;
+        gpio_set_level(GPIO_PIN, ON);
+
+        ESP_LOGI(TAG, "GPIO 13 at %s", ON ? "ON" : "OFF");
 
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
@@ -80,6 +98,17 @@ void app_main(void) {
         4, //priority
         NULL //task handle
     );
+
+    xTaskCreate(
+        GPIO_task, //Function that implements the task
+        "GPIO", //Text name for task (debugging guide)
+        2048, //Stack size
+        NULL, //task parameter
+        4, //priority
+        NULL //task handle
+    );
+
+
 
     // xTaskCreate(
     //     higher_led,
