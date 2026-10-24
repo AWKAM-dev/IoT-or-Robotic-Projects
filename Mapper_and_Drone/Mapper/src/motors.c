@@ -17,21 +17,19 @@ B EN2 == PC15
 
 
 //Reset IC state
-void resetIC(char ICID){
-    if(ICID == "A"){
+void resetIC(){
+    //A
     HAL_GPIO_WritePin(GPIOA, L293D_A_IN1_Pin | L293D_A_EN1_Pin | L293D_A_EN2_Pin, RESET);
     HAL_GPIO_WritePin(GPIOB, L293D_A_IN3_Pin | L293D_A_IN4_Pin,RESET);
     HAL_GPIO_WritePin(GPIOC, L293D_A_IN2_Pin, RESET);
-    }
 
-    if(ICID == "B"){
-        HAL_GPIO_WritePin(GPIOA, L293D_B_IN2_Pin | L293D_B_EN1_Pin, RESET);
-        HAL_GPIO_WritePin(GPIOB, L293D_B_IN3_Pin| L293D_B_IN4_Pin,RESET);
-        HAL_GPIO_WritePin(GPIOC, L293D_B_IN1_Pin | L293D_B_EN2_Pin,RESET);
-    }
+    //B
+    HAL_GPIO_WritePin(GPIOA, L293D_B_IN2_Pin | L293D_B_EN1_Pin, RESET);
+    HAL_GPIO_WritePin(GPIOB, L293D_B_IN3_Pin| L293D_B_IN4_Pin,RESET);
+    HAL_GPIO_WritePin(GPIOC, L293D_B_IN1_Pin | L293D_B_EN2_Pin,RESET);
 }
 
-void moveForward(char ICID){
+void moveForward(){
     //A
     HAL_GPIO_WritePin(GPIOA, L293D_A_EN1_Pin, SET);
     HAL_GPIO_WritePin(GPIOA, L293D_A_IN1_Pin, SET);
@@ -51,7 +49,7 @@ void moveForward(char ICID){
     HAL_GPIO_WritePin(GPIOB, L293D_B_IN4_Pin, RESET);
 }
 
-void moveBackward(char ICID){
+void moveBackward(){
     //A
     HAL_GPIO_WritePin(GPIOA, L293D_A_EN1_Pin, SET);
     HAL_GPIO_WritePin(GPIOA, L293D_A_IN1_Pin, RESET);
@@ -71,7 +69,7 @@ void moveBackward(char ICID){
     HAL_GPIO_WritePin(GPIOB, L293D_B_IN4_Pin, SET);
 }
 
-void brake(char ICID){
+void brake(){
     //A
     HAL_GPIO_WritePin(GPIOA, L293D_A_IN1_Pin | L293D_A_EN1_Pin | L293D_A_EN2_Pin, SET);
     HAL_GPIO_WritePin(GPIOB, L293D_A_IN3_Pin | L293D_A_IN4_Pin,SET);
