@@ -15,7 +15,6 @@ B EN1 == PA5
 B EN2 == PC15
 */
 
-
 //Reset IC state
 void resetIC(){
     //A
@@ -28,6 +27,7 @@ void resetIC(){
     HAL_GPIO_WritePin(GPIOB, L293D_B_IN3_Pin| L293D_B_IN4_Pin,RESET);
     HAL_GPIO_WritePin(GPIOC, L293D_B_IN1_Pin | L293D_B_EN2_Pin,RESET);
 }
+
 
 void moveForward(){
     //A

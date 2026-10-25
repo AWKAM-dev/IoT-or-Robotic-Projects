@@ -21,12 +21,15 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stm32f4xx_hal.h"
+#include "stm32f4xx_hal_tim.h"
+#include "stm32f4xx_hal_adc.h"
+#include "stm32f4xx_hal_uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+TIM_HandleTypeDef htim2;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -279,7 +282,7 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
+    
   /*Configure GPIO pin : Servo_PWM_Pin */
   GPIO_InitStruct.Pin = Servo_PWM_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -287,6 +290,22 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.Alternate = GPIO_AF1_TIM2;
   HAL_GPIO_Init(Servo_PWM_GPIO_Port, &GPIO_InitStruct);
+
+  //Configuring Timer base for 50Hz (Servo PWM) (1 us tick resolution)
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 100 - 1; //100MHz / 100 = 1 MHz (1 tick = 1 us)
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 20000 - 1; //20000 ticks = 20ms periods (50Hz) 
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  HAL_TIM_PWM_Init(&htim2);
+
+  //Configure PWM Channel 1 Output parameters
+  TIM_OC_InitTypeDef sConfigOC = {0};
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 1500;   //Default start position: 1500us (90)
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1);
 
   /*Configure GPIO pin : LIS3DH_INT1_Pin */
   GPIO_InitStruct.Pin = LIS3DH_INT1_Pin;
