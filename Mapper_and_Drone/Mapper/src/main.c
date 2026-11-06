@@ -37,6 +37,11 @@ ADC_HandleTypeDef hadc1;
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define LIS3DH_I2C_ADDR (0x18 << 1) //7 bit address shifted for HAL
+
+#define potA ADC_CHANNEL_7
+#define potB ADC_CHANNEL_9
+#define potC ADC_CHANNEL_8
+#define potD ADC_CHANNEL_6
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -60,9 +65,6 @@ static void MX_ADC1_Init(void);
 static void MX_USART1_UART_Init(void);
 
 /* USER CODE BEGIN PFP */
-void I2C1_Init(void);
-void LIS3DH_Init(void);
-
 void ADC_Init(void);
 uint32_t Read_ADC_Channel(uint32_t channel);
 /* USER CODE END PFP */
@@ -89,18 +91,15 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  I2C1_Init();
-  LIS3DH_Init();
-
-  ADC_Init();
-
+  //LIS3DH
   int16_t raw_accel[3];
   uint8_t reg_addr = 0x28 | 0x80; //0x28 is OUT_X_L, bit 7 high enables auto-increment
   
-  uint32_t val_pa6 = 0;
-  uint32_t val_pa7 = 0;
-  uint32_t val_pb0 = 0;
-  uint32_t val_pb1 = 0;
+  //Potentiometer
+  uint32_t val_potA = 0;
+  uint32_t val_potB = 0;
+  uint32_t val_potC = 0;
+  uint32_t val_potD = 0;
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -128,10 +127,10 @@ int main(void)
     HAL_I2C_Master_Recieve(&hi2c1, LIS3DH_I2C_ADDR, (uint8_t *)raw_accel, 6, HAL_MAX_DELAY);
     
     //Reading each potentiometer channel
-    val_pa6 = Read_ADC_Channel(ADC_CHANNEL_6);
-    val_pa7 = Read_ADC_Channel(ADC_CHANNEL_7);
-    val_pb0 = Read_ADC_Channel(ADC_CHANNEL_8);
-    val_pb1 = Read_ADC_Channel(ADC_CHANNEL_9);
+    val_potD = Read_ADC_Channel(potD);
+    val_potA = Read_ADC_Channel(potA);
+    val_potC = Read_ADC_Channel(potC);
+    val_potB = Read_ADC_Channel(potB);
 
     HAL_Delay(100);
     /* USER CODE END WHILE */
@@ -443,40 +442,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void LIS3DH_Init(void){
-  uint8_t config_data[2];
 
-  //Enable all axes and set output data rate to 50Hz (CTRL_REG1 = 0x47)
-  config_data[0] = 0x20;
-  config_data[1] = 0x47;
-  HAL_I2C_Master_Transmit(&hi2c1, LIS3DH_I2C_ADDR, config_data, 2, HAL_MAX_DELAY);
-
-  //Set full-scale range to +/- 2g (CTRL_REG4 = 0x08)
-  config_data[0] = 0x23;
-  config_data[1]= 0x08;
-  HAL_I2C_Master_Transmit(&hi2c1, LIS3DH_I2C_ADDR, config_data, 2, HAL_MAX_DELAY);
-}
-
-uint32_t Read_ADC_Channel(uint32_t channel){
-  ADC_ChannelConfTypeDef sConfig = {0};
-  sConfig.Channel = channel;
-  sConfig.Rank = 1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
-
-  //Apply channel selection to ADC
-  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
-
-  //Start conversion, wait for result, stop
-  HAL_ADC_Stop(&hadc1);
-  if (HAL_ADC_PollForConversion(&hadc1, 100) == HAL_OK) {
-      uint32_t adc_value = HAL_ADC_GetValue(&hadc1);
-      HAL_ADC_Stop(&hadc1);
-      return adc_value;
-  }
-
-  HAL_ADC_Stop(&hadc1);
-  return 0; //Return 0 if timeout occurs
-}
 /* USER CODE END 4 */
 
 /**
