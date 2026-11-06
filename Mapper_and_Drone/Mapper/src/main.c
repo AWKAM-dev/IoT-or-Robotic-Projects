@@ -30,11 +30,13 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 TIM_HandleTypeDef htim2;
+I2C_HandleTypeDef hi2c1;
+ADC_HandleTypeDef hadc1;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define LIS3DH_I2C_ADDR (0x18 << 1) //7 bit address shifted for HAL
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -56,10 +58,13 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_USART1_UART_Init(void);
+
 /* USER CODE BEGIN PFP */
+void I2C1_Init(void);
+void LIS3DH_Init(void);
 
-
-
+void ADC_Init(void);
+uint32_t Read_ADC_Channel(uint32_t channel);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -84,7 +89,18 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+  I2C1_Init();
+  LIS3DH_Init();
 
+  ADC_Init();
+
+  int16_t raw_accel[3];
+  uint8_t reg_addr = 0x28 | 0x80; //0x28 is OUT_X_L, bit 7 high enables auto-increment
+  
+  uint32_t val_pa6 = 0;
+  uint32_t val_pa7 = 0;
+  uint32_t val_pb0 = 0;
+  uint32_t val_pb1 = 0;
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -106,10 +122,23 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    //LIS3DH code
+    //Read X, Y and Z accel data bytes (6 bytes total)
+    HAL_I2C_Master_Transmit(&hi2c1, LIS3DH_I2C_ADDR, &reg_addr, 1, HAL_MAX_DELAY);
+    HAL_I2C_Master_Recieve(&hi2c1, LIS3DH_I2C_ADDR, (uint8_t *)raw_accel, 6, HAL_MAX_DELAY);
+    
+    //Reading each potentiometer channel
+    val_pa6 = Read_ADC_Channel(ADC_CHANNEL_6);
+    val_pa7 = Read_ADC_Channel(ADC_CHANNEL_7);
+    val_pb0 = Read_ADC_Channel(ADC_CHANNEL_8);
+    val_pb1 = Read_ADC_Channel(ADC_CHANNEL_9);
+
+    HAL_Delay(100);
     /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
   }
+  /* USER CODE BEGIN 3 */
+
   /* USER CODE END 3 */
 }
 
@@ -256,7 +285,8 @@ static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* USER CODE BEGIN MX_GPIO_Init_1 */
-
+  __HAL_RCC_I2C1_CLK_ENABLE();
+  __HAL_RCC_ADC1_CLK_ENABLE();
   /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
@@ -265,16 +295,38 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
+  /*
+  Potentiometer_A_Sweep_GPIO_Port
+  Potentiometer_B_Sweep_GPIO_Port
+  Potentiometer_C_Sweep_GPIO_Port
+  Potentiometer_D_Sweep_GPIO_Port
+  */
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, L293D_B_IN1_Pin|L293D_A_IN2_Pin|L293D_B_EN2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, L293D_A_EN1_Pin|L293D_A_EN2_Pin|L293D_A_IN1_Pin|L293D_B_EN1_Pin
-                          |L293D_B_IN2_Pin|Ultrasound_B_Trig_Pin, GPIO_PIN_RESET);
+                          |L293D_B_IN2_Pin|Ultrasound_B_Trig_Pin|Potentiometer_A_Sweep_Pin|Potentiometer_D_Sweep_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, Ultrasound_C_Trig_Pin|L293D_B_IN4_Pin|L293D_B_IN3_Pin|Ultrasound_A_Trig_Pin
-                          |L293D_A_IN4_Pin|L293D_A_IN3_Pin, GPIO_PIN_RESET);
+                          |L293D_A_IN4_Pin|L293D_A_IN3_Pin|Potentiometer_B_Sweep_Pin|Potentiometer_C_Sweep_Pin, GPIO_PIN_RESET);
+
+  //Configure Potentiometer Pins
+  GPIO_InitStruct.Pin = Potentiometer_A_Sweep_Pin | Potentiometer_B_Sweep_Pin | Potentiometer_C_Sweep_Pin | Potentiometer_D_Sweep_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  //Configure the ADC Handle
+  hadc1.Instance = ADC1;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4; //Clock speed divider
+  hadc1.Init.Resolution = ADC_RESOLUTION_12B; //0 to 4095
+  hadc1.Init.ScanConvMode = DISABLE; //Single channel mode at a time
+  hadc1.Init.ContinuousConvMode = DISABLE; //Don't free-run continously
+  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc1.Init.NbrOfConversion = 1;
+  HAL_ADC_Init(&hadc1);
 
   /*Configure GPIO pins : L293D_B_IN1_Pin L293D_A_IN2_Pin L293D_B_EN2_Pin */
   GPIO_InitStruct.Pin = L293D_B_IN1_Pin|L293D_A_IN2_Pin|L293D_B_EN2_Pin;
@@ -309,8 +361,8 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : LIS3DH_INT1_Pin */
   GPIO_InitStruct.Pin = LIS3DH_INT1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING; //Trigger on rising edge
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN; 
   HAL_GPIO_Init(LIS3DH_INT1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : L293D_A_EN1_Pin L293D_A_EN2_Pin L293D_A_IN1_Pin L293D_B_EN1_Pin
@@ -353,10 +405,10 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : LIS3DH_SCL_Pin LIS3DH_SDA_Pin */
   GPIO_InitStruct.Pin = LIS3DH_SCL_Pin|LIS3DH_SDA_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_OD; //Must be open drain for I2C
+  GPIO_InitStruct.Pull = GPIO_PULLUP; //Internal pullups required
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;
+  GPIO_InitStruct.Alternate = GPIO_AF4_I2C1; //AF4 maps PB6/7 to I2C1
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Ultrasound_A_Echo_Pin Ultrasound_B_Echo_Pin */
@@ -369,11 +421,62 @@ static void MX_GPIO_Init(void)
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
+    //Enable and set Interrupt priority for INT1 in LIS3DH in NVIC
+    HAL_NVIC_SetPriority(EXTI1_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+
+    //Configure I2C1 Peripheral Handle
+    hi2c1.Instance = I2C1;
+    hi2c1.Init.ClockSpeed = 100000;
+    hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
+    hi2c1.Init.OwnAddress1 = 0;
+    hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+    hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+    hi2c1.Init.OwnAddress2 = 0;
+    hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+    hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+
+    HAL_I2C_Init(&hi2c1);
+
+
   /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
+void LIS3DH_Init(void){
+  uint8_t config_data[2];
 
+  //Enable all axes and set output data rate to 50Hz (CTRL_REG1 = 0x47)
+  config_data[0] = 0x20;
+  config_data[1] = 0x47;
+  HAL_I2C_Master_Transmit(&hi2c1, LIS3DH_I2C_ADDR, config_data, 2, HAL_MAX_DELAY);
+
+  //Set full-scale range to +/- 2g (CTRL_REG4 = 0x08)
+  config_data[0] = 0x23;
+  config_data[1]= 0x08;
+  HAL_I2C_Master_Transmit(&hi2c1, LIS3DH_I2C_ADDR, config_data, 2, HAL_MAX_DELAY);
+}
+
+uint32_t Read_ADC_Channel(uint32_t channel){
+  ADC_ChannelConfTypeDef sConfig = {0};
+  sConfig.Channel = channel;
+  sConfig.Rank = 1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
+
+  //Apply channel selection to ADC
+  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+
+  //Start conversion, wait for result, stop
+  HAL_ADC_Stop(&hadc1);
+  if (HAL_ADC_PollForConversion(&hadc1, 100) == HAL_OK) {
+      uint32_t adc_value = HAL_ADC_GetValue(&hadc1);
+      HAL_ADC_Stop(&hadc1);
+      return adc_value;
+  }
+
+  HAL_ADC_Stop(&hadc1);
+  return 0; //Return 0 if timeout occurs
+}
 /* USER CODE END 4 */
 
 /**

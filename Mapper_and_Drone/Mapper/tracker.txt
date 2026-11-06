@@ -1,0 +1,5 @@
+ESP32 CAM               Pending
+LIS3DH                  Coded in main. Need seperation and header inclusion
+Motors                  Seperate file but needs correction to better accomodate for project.
+Potentiometer.h         Coded in main. Need seperation and header inclusion.
+SGServo.h               Finished.
